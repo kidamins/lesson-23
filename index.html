@@ -6,7 +6,7 @@
 <title>คำศัพท์ภาษาจีน Book 1B</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+Thai:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
- 
+
   :root {
     --ink: #1a1008;
     --paper: #faf6f0;
@@ -17,9 +17,9 @@
     --border: #d6c9b6;
     --green: #2e7d52;
   }
- 
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
- 
+
   body {
     font-family: 'Noto Sans Thai', sans-serif;
     background: #2a1f14;
@@ -30,12 +30,12 @@
     min-height: 100vh;
     padding: 16px;
   }
- 
+
   .stage {
     width: 100%;
     max-width: 820px;
   }
- 
+
   /* Progress bar */
   .progress-bar {
     display: flex;
@@ -53,7 +53,7 @@
   }
   .prog-dot.active { background: var(--gold); }
   .prog-dot.visited { background: #9a7a5a; }
- 
+
   /* Card */
   .card {
     background: var(--paper);
@@ -66,7 +66,7 @@
     display: flex;
     flex-direction: column;
   }
- 
+
   /* Card header */
   .card-header {
     background: var(--red);
@@ -89,7 +89,7 @@
     border-radius: 20px;
     letter-spacing: 1px;
   }
- 
+
   /* Main content */
   .card-body {
     padding: 28px 32px 20px;
@@ -98,7 +98,7 @@
     flex-direction: column;
     gap: 16px;
   }
- 
+
   /* Chinese character hero */
   .hero {
     display: flex;
@@ -126,7 +126,7 @@
   }
   .chinese.two-char { font-size: 52px; }
   .chinese.three-char { font-size: 40px; }
- 
+
   .meaning-block {
     flex: 1;
     padding-top: 8px;
@@ -155,14 +155,14 @@
     font-weight: 600;
     letter-spacing: 0.5px;
   }
- 
+
   /* Divider */
   .divider {
     border: none;
     border-top: 1px solid var(--border);
     margin: 4px 0;
   }
- 
+
   /* Usage section */
   .section-label {
     font-size: 10px;
@@ -172,7 +172,7 @@
     text-transform: uppercase;
     margin-bottom: 8px;
   }
- 
+
   .usage-tip {
     background: var(--pale);
     border-left: 3px solid var(--gold);
@@ -182,7 +182,7 @@
     color: var(--ink);
     line-height: 1.7;
   }
- 
+
   /* Example sentences */
   .examples {
     display: flex;
@@ -221,7 +221,7 @@
     color: var(--green);
     font-weight: 500;
   }
- 
+
   /* Compounds / related */
   .compounds {
     display: flex;
@@ -241,7 +241,7 @@
   }
   .compound-zh { font-family: 'Noto Serif SC', serif; font-size: 16px; color: var(--ink); }
   .compound-th { font-size: 11px; color: var(--muted); }
- 
+
   /* Navigation */
   .nav {
     display: flex;
@@ -271,7 +271,7 @@
     color: var(--muted);
     font-weight: 600;
   }
- 
+
   /* Section tabs */
   .tabs {
     display: flex;
@@ -292,10 +292,10 @@
   }
   .tab.active { color: var(--red); border-bottom-color: var(--red); }
   .tab:hover { color: var(--ink); }
- 
+
   .tab-pane { display: none; }
   .tab-pane.active { display: block; }
- 
+
   /* Cover card */
   .cover {
     background: var(--ink);
@@ -338,14 +338,14 @@
     transition: opacity 0.2s;
   }
   .cover-btn:hover { opacity: 0.85; }
- 
+
   .ornament {
     font-family: 'Noto Serif SC', serif;
     font-size: 80px;
     color: rgba(201,151,58,0.15);
     line-height: 1;
   }
- 
+
   /* ── Quiz styles ── */
   .quiz-header {
     background: #1a3a5c;
@@ -458,17 +458,17 @@
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 6px 14px;
-    cursor: pointer;
+    cursor: grab;
     user-select: none;
     transition: box-shadow 0.15s, transform 0.15s, background 0.2s;
-    touch-action: manipulation;
+    touch-action: none;
   }
   .word-chip:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
   .word-chip.dragging { opacity: 0.45; }
-  .word-chip.in-answer { background: #e8f4ed; border-color: #a8d5b8; }
+  .word-chip.in-answer { background: #e8f4ed; border-color: #a8d5b8; cursor: grab; }
   .word-chip.correct-chip { background: #d4edda; border-color: var(--green); cursor: default; }
   .word-chip.wrong-chip   { background: #fde8e6; border-color: var(--red);   cursor: default; }
- 
+
   /* Feedback */
   .quiz-feedback {
     font-size: 14px;
@@ -481,13 +481,13 @@
   .quiz-feedback.show { display: block; }
   .quiz-feedback.correct { background: #d4edda; color: var(--green); }
   .quiz-feedback.wrong   { background: #fde8e6; color: var(--red); }
- 
+
   .correct-sentence {
     font-family: 'Noto Serif SC', serif;
     font-size: 16px;
     margin-top: 4px;
   }
- 
+
   /* Quiz result */
   .quiz-result {
     text-align: center;
@@ -495,7 +495,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 14px;
     flex: 1;
   }
@@ -518,10 +517,9 @@
     font-weight: 600;
     cursor: pointer;
     transition: opacity 0.2s;
-    margin-top: 20px;
   }
   .result-btn:hover { opacity: 0.85; }
- 
+
   .area-label {
     font-size: 10px;
     font-weight: 600;
@@ -536,9 +534,10 @@
 <div class="stage">
   <div class="progress-bar" id="progressBar"></div>
   <div class="card" id="mainCard">
-    </div>
+    <!-- JS renders content here -->
+  </div>
 </div>
- 
+
 <script>
 const POS_TH = {
   '名': 'คำนาม',
@@ -551,7 +550,7 @@ const POS_TH = {
   '尾': 'คำต่อท้าย',
   '副': 'คำวิเศษณ์',
 };
- 
+
 const vocab = [
   {
     num: 1, zh: '每', pinyin: 'měi', pos: ['代'],
@@ -829,4 +828,489 @@ const vocab = [
     tip: '带 มีสามความหมาย: 1) พาไป 带你去 2) นำมา 带来 3) พกติดตัว 带雨伞',
     examples: [
       { zh: ['请','带','你','的','书','来','。'], highlight: [1], pinyin: 'Qǐng dài nǐ de shū lái.', th: 'กรุณานำหนังสือของคุณมาด้วย' },
-      { zh: ['老','师','带','我','们','去','爬','山','。'], highlight: [2], pinyin: 'Lǎosh
+      { zh: ['老','师','带','我','们','去','爬','山','。'], highlight: [2], pinyin: 'Lǎoshī dài wǒmen qù pá shān.', th: 'คุณครูพาพวกเราไปปีนเขา' },
+    ],
+    related: [{ zh: '带来', th: 'นำมา' }, { zh: '带走', th: 'นำไป' }, { zh: '带领', th: 'นำทาง/นำพา' }]
+  },
+];
+
+let current = -1; // -1 = cover
+const visited = new Set();
+
+function charLen(zh) {
+  return zh.replace('/', '').replace(/[（）]/g, '').length;
+}
+
+function renderProgressBar() {
+  const bar = document.getElementById('progressBar');
+  if (!bar) return;
+  bar.innerHTML = '';
+  if (current === 'quiz') {
+    quizState.questions.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'prog-dot' + (i === quizState.qIndex ? ' active' : (i < quizState.qIndex ? ' visited' : ''));
+      if (i < quizState.qIndex) dot.style.background = '#1a3a5c';
+      bar.appendChild(dot);
+    });
+    return;
+  }
+  vocab.forEach((v, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'prog-dot' + (i === current ? ' active' : (visited.has(i) ? ' visited' : ''));
+    dot.title = v.zh;
+    dot.onclick = () => { current = i; render(); };
+    bar.appendChild(dot);
+  });
+}
+
+function buildExampleHTML(ex) {
+  const chars = ex.zh;
+  const highlightSet = new Set(ex.highlight);
+  return chars.map((c, i) => 
+    highlightSet.has(i) ? `<span class="highlight">${c}</span>` : c
+  ).join('');
+}
+
+function render() {
+  const card = document.getElementById('mainCard');
+
+  if (current === -1) {
+    card.innerHTML = `
+      <div class="cover">
+        <div class="ornament">字</div>
+        <div class="cover-title" style="font-size:26px;line-height:1.5">我们明天七点一刻出发。</div>
+        <div class="cover-sub" style="font-size:13px;margin-top:2px">Wǒmen míngtiān qī diǎn yī kè chūfā.<br><span style="color:rgba(255,255,255,0.5)">พวกเราจะออกเดินทางพรุ่งนี้ตอนเจ็ดโมงสิบห้านาที</span></div>
+        <div style="height:1px;background:rgba(255,255,255,0.12);width:60%;margin:4px 0"></div>
+        <div class="cover-sub">คำศัพท์ชีวิตประจำวัน · เวลา · โรงเรียน · กิจกรรม</div>
+        <div class="cover-count">${vocab.length} คำศัพท์</div>
+        <button class="cover-btn" onclick="goNext()">เริ่มเรียน →</button>
+      </div>`;
+    renderProgressBar();
+    return;
+  }
+
+  visited.add(current);
+  const v = vocab[current];
+  const len = v.zh.replace('/','').replace('（钟）','').length;
+  const sizeClass = len >= 4 ? 'three-char' : (len >= 3 ? 'two-char' : '');
+  const posLabels = v.pos.map(p => `<span class="pos-tag">${p} ${POS_TH[p] || ''}</span>`).join(' ');
+
+  let relatedHTML = '';
+  if (v.related && v.related.length) {
+    relatedHTML = `
+      <hr class="divider"/>
+      <div>
+        <div class="section-label">คำที่เกี่ยวข้อง</div>
+        <div class="compounds">
+          ${v.related.map(r => `<div class="compound-chip"><span class="compound-zh">${r.zh}</span><span class="compound-th">${r.th}</span></div>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  card.innerHTML = `
+    <div class="card-header">
+      <div class="card-num">คำที่ ${v.num} / ${vocab.length}</div>
+      ${v.pos.map(p => `<div class="card-pos">${p} ${POS_TH[p]||''}</div>`).join('')}
+    </div>
+    <div class="card-body">
+      <div class="hero">
+        <div class="char-block">
+          <div class="pinyin">${v.pinyin}</div>
+          <div class="chinese ${sizeClass}">${v.zh}</div>
+        </div>
+        <div class="meaning-block">
+          <div class="thai-meaning">${v.th}</div>
+          <div class="eng-meaning">${v.en}</div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this,'tips')">วิธีใช้</div>
+        <div class="tab" onclick="switchTab(this,'examples')">ตัวอย่าง</div>
+        <div class="tab" onclick="switchTab(this,'related')">คำเกี่ยวข้อง</div>
+      </div>
+
+      <div id="pane-tips" class="tab-pane active">
+        <div class="usage-tip">${v.tip}</div>
+      </div>
+
+      <div id="pane-examples" class="tab-pane">
+        <div class="examples">
+          ${v.examples.map(ex => `
+            <div class="example-item">
+              <div class="example-zh">${buildExampleHTML(ex)}</div>
+              <div class="example-pinyin">${ex.pinyin}</div>
+              <div class="example-thai">${ex.th}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div id="pane-related" class="tab-pane">
+        <div class="compounds">
+          ${(v.related||[]).map(r => `<div class="compound-chip"><span class="compound-zh">${r.zh}</span><span class="compound-th">${r.th}</span></div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="nav-btn" onclick="goPrev()" ${current <= 0 ? 'disabled' : ''}>← ก่อนหน้า</button>
+      <span class="nav-counter">${current + 1} / ${vocab.length}</span>
+      <button class="nav-btn" onclick="goNext()">${current >= vocab.length - 1 ? 'ทำแบบทดสอบ →' : 'ถัดไป →'}</button>
+    </div>`;
+
+  renderProgressBar();
+}
+
+function switchTab(el, pane) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('pane-' + pane).classList.add('active');
+}
+
+function goNext() {
+  if (current < vocab.length - 1) { current++; render(); }
+  else { startQuiz(); }
+}
+function goPrev() {
+  if (current > 0) { current--; render(); }
+  else { current = -1; render(); }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' && current !== 'quiz') goNext();
+  if (e.key === 'ArrowLeft'  && current !== 'quiz') goPrev();
+});
+
+// ── QUIZ ENGINE ──────────────────────────────────────────────
+
+// sentence = word-tokens (no punctuation); full = display with punct
+const quizData = [
+  { sentence: ['我','早上','九点','起床'],           full: '我早上九点起床。',    th: 'ฉันตื่นนอนตอนเก้าโมงเช้า',           pinyin: 'Wǒ zǎoshang jiǔ diǎn qǐ chuáng.' },
+  { sentence: ['老师','下午','两点','上课'],          full: '老师下午两点上课。',   th: 'คุณครูเริ่มสอนตอนบ่ายสองโมง',          pinyin: 'Lǎoshī xiàwǔ liǎng diǎn shàng kè.' },
+  { sentence: ['我们','八点半','出发'],               full: '我们八点半出发。',     th: 'พวกเราออกเดินทางตอนแปดโมงครึ่ง',       pinyin: 'Wǒmen bā diǎn bàn chūfā.' },
+  { sentence: ['我们','在','操场','锻炼','身体'],     full: '我们在操场锻炼身体。', th: 'พวกเราออกกำลังกายที่สนาม',             pinyin: 'Wǒmen zài cāochǎng duànliàn shēntǐ.' },
+  { sentence: ['我','洗澡','然后','睡觉'],            full: '我洗澡，然后睡觉。',   th: 'ฉันอาบน้ำ จากนั้นก็นอน',              pinyin: 'Wǒ xǐ zǎo, ránhòu shuìjiào.' },
+  { sentence: ['请','准时','到','学校'],              full: '请准时到学校。',       th: 'กรุณามาถึงโรงเรียนให้ตรงเวลา',         pinyin: 'Qǐng zhǔnshí dào xuéxiào.' },
+  { sentence: ['我们','在','学校前','集合'],          full: '我们在学校前集合。',   th: 'พวกเรารวมตัวกันที่หน้าโรงเรียน',       pinyin: 'Wǒmen zài xuéxiào qián jíhé.' },
+  { sentence: ['老师','带','我们','去','爬山'],       full: '老师带我们去爬山。',   th: 'คุณครูพาพวกเราไปปีนเขา',              pinyin: 'Lǎoshī dài wǒmen qù pá shān.' },
+  { sentence: ['下午','三点半','下课'],               full: '下午三点半下课。',     th: 'บ่ายสามโมงครึ่งเลิกเรียน',             pinyin: 'Xiàwǔ sān diǎn bàn xià kè.' },
+  { sentence: ['每天','锻炼','对','身体','好'],       full: '每天锻炼对身体好。',   th: 'ออกกำลังกายทุกวันดีต่อสุขภาพ',         pinyin: 'Měi tiān duànliàn duì shēntǐ hǎo.' },
+];
+
+let quizState = {
+  questions: [],
+  qIndex: 0,
+  score: 0,
+  answered: false,
+  bankWords: [],
+  answerWords: [],
+  dragSrc: null,
+  dragFrom: null, // 'bank' | 'answer'
+};
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  current = 'quiz';
+  quizState.questions = shuffle(quizData).slice(0, 8);
+  quizState.qIndex = 0;
+  quizState.score = 0;
+  renderProgressBar();
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const card = document.getElementById('mainCard');
+  const total = quizState.questions.length;
+
+  if (quizState.qIndex >= total) {
+    renderQuizResult();
+    return;
+  }
+
+  const q = quizState.questions[quizState.qIndex];
+  // Assign stable ids first, then shuffle
+  const withIds = q.sentence.map((w, i) => ({ id: i, text: w }));
+  quizState.bankWords = shuffle(withIds);
+  quizState.answerWords = [];
+  quizState.answered = false;
+
+  const pct = Math.round((quizState.qIndex / total) * 100);
+
+  card.innerHTML = `
+    <div class="quiz-header">
+      <div class="quiz-header-title">แบบทดสอบเรียงประโยค</div>
+      <div class="quiz-score-badge">ข้อ ${quizState.qIndex + 1} / ${total}</div>
+    </div>
+    <div class="quiz-body">
+      <div class="quiz-progress"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+
+      <div class="quiz-question-label">เรียงคำให้เป็นประโยค</div>
+
+      <div class="quiz-meaning">${q.th}</div>
+
+      <div>
+        <div class="area-label">วางคำที่นี่</div>
+        <div class="answer-area" id="answerArea">
+          <span class="answer-placeholder" id="answerPlaceholder">ลากคำมาวางที่นี่...</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="area-label">คลังคำ</div>
+        <div class="word-bank" id="wordBank"></div>
+      </div>
+
+      <div class="quiz-feedback" id="quizFeedback"></div>
+    </div>
+    <div class="nav">
+      <button class="nav-btn" style="background:#1a3a5c" onclick="backToVocab()">← กลับทบทวน</button>
+      <span class="nav-counter" style="color:var(--muted)">คะแนน ${quizState.score} / ${quizState.qIndex}</span>
+      <button class="nav-btn" style="background:#1a3a5c" id="checkBtn" onclick="checkAnswer()">ตรวจคำตอบ ✓</button>
+    </div>`;
+
+  renderWordBank();
+  renderAnswerArea();
+  setupDragDrop();
+  renderProgressBar();
+}
+
+function renderWordBank() {
+  const bank = document.getElementById('wordBank');
+  if (!bank) return;
+  bank.innerHTML = '';
+  quizState.bankWords.forEach(w => {
+    const chip = document.createElement('div');
+    chip.className = 'word-chip';
+    chip.textContent = w.text;
+    chip.dataset.id = w.id;
+    chip.dataset.from = 'bank';
+    bank.appendChild(chip);
+  });
+}
+
+function renderAnswerArea() {
+  const area = document.getElementById('answerArea');
+  if (!area) return;
+  const ph = document.getElementById('answerPlaceholder');
+  // Remove old chips (keep placeholder)
+  [...area.querySelectorAll('.word-chip')].forEach(c => c.remove());
+  if (quizState.answerWords.length === 0) {
+    if (ph) ph.style.display = '';
+  } else {
+    if (ph) ph.style.display = 'none';
+    quizState.answerWords.forEach(w => {
+      const chip = document.createElement('div');
+      chip.className = 'word-chip in-answer';
+      chip.textContent = w.text;
+      chip.dataset.id = w.id;
+      chip.dataset.from = 'answer';
+      area.appendChild(chip);
+    });
+  }
+}
+
+function setupDragDrop() {
+  // Touch + mouse drag for chips
+  const card = document.getElementById('mainCard');
+  if (!card) return;
+
+  let dragging = null;
+  let dragFrom = null;
+  let clone = null;
+  let startX, startY;
+  let didDrag = false; // prevents click firing after drag
+
+  function getChip(e) {
+    return e.target.closest('.word-chip');
+  }
+
+  // Pointer events (works for both mouse and touch)
+  card.addEventListener('pointerdown', e => {
+    if (quizState.answered) return;
+    const chip = getChip(e);
+    if (!chip) return;
+    e.preventDefault();
+    didDrag = false;
+    dragging = { id: +chip.dataset.id, text: chip.textContent.trim(), from: chip.dataset.from };
+    chip.classList.add('dragging');
+    clone = chip.cloneNode(true);
+    clone.style.cssText = `position:fixed;pointer-events:none;z-index:9999;opacity:0.9;transform:scale(1.08);transition:none;font-size:18px;padding:6px 14px;background:var(--pale);border:1px solid var(--border);border-radius:4px;font-family:'Noto Serif SC',serif;`;
+    document.body.appendChild(clone);
+    startX = e.clientX; startY = e.clientY;
+    moveClone(e);
+  });
+
+  card.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    e.preventDefault();
+    moveClone(e);
+    highlightDrop(e);
+  });
+
+  card.addEventListener('pointerup', e => {
+    if (!dragging) return;
+    e.preventDefault();
+    const target = getDropTarget(e);
+    if (target) {
+      handleDrop(dragging, target);
+      didDrag = true; // suppress the click that follows
+    }
+    cleanup();
+  });
+
+  card.addEventListener('pointercancel', () => { if (dragging) cleanup(); });
+
+  function moveClone(e) {
+    if (!clone) return;
+    clone.style.left = (e.clientX - 30) + 'px';
+    clone.style.top  = (e.clientY - 20) + 'px';
+  }
+
+  function getDropTarget(e) {
+    if (!clone) return null;
+    clone.style.display = 'none';
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    clone.style.display = '';
+    if (!el) return null;
+    if (el.closest('#answerArea')) return 'answer';
+    if (el.closest('#wordBank')) return 'bank';
+    return null;
+  }
+
+  function highlightDrop(e) {
+    const target = getDropTarget(e);
+    const aa = document.getElementById('answerArea');
+    const wb = document.getElementById('wordBank');
+    if (aa) aa.classList.toggle('drag-over', target === 'answer');
+    if (wb) wb.classList.toggle('drag-over', target === 'bank');
+  }
+
+  function cleanup() {
+    if (clone) { clone.remove(); clone = null; }
+    card.querySelectorAll('.word-chip.dragging').forEach(c => c.classList.remove('dragging'));
+    const aa = document.getElementById('answerArea');
+    const wb = document.getElementById('wordBank');
+    if (aa) aa.classList.remove('drag-over');
+    if (wb) wb.classList.remove('drag-over');
+    dragging = null;
+  }
+
+  function handleDrop(chip, target) {
+    if (!target) return;
+    if (chip.from === 'bank' && target === 'answer') {
+      quizState.bankWords = quizState.bankWords.filter(w => w.id !== chip.id);
+      quizState.answerWords.push({ id: chip.id, text: chip.text });
+      renderWordBank(); renderAnswerArea();
+    } else if (chip.from === 'answer' && target === 'bank') {
+      quizState.answerWords = quizState.answerWords.filter(w => w.id !== chip.id);
+      quizState.bankWords.push({ id: chip.id, text: chip.text });
+      renderWordBank(); renderAnswerArea();
+    } else if (chip.from === 'answer' && target === 'answer') {
+      // reorder: append to end
+      quizState.answerWords = quizState.answerWords.filter(w => w.id !== chip.id);
+      quizState.answerWords.push({ id: chip.id, text: chip.text });
+      renderAnswerArea();
+    }
+  }
+
+  // Click to move (tap on mobile / click on desktop — only if NOT a drag)
+  card.addEventListener('click', e => {
+    if (didDrag) { didDrag = false; return; } // swallow click that follows a drag
+    if (quizState.answered) return;
+    const chip = getChip(e);
+    if (!chip) return;
+    const id = +chip.dataset.id;
+    const text = chip.textContent.trim();
+    const from = chip.dataset.from;
+    if (from === 'bank') {
+      quizState.bankWords = quizState.bankWords.filter(w => w.id !== id);
+      quizState.answerWords.push({ id, text });
+    } else {
+      quizState.answerWords = quizState.answerWords.filter(w => w.id !== id);
+      quizState.bankWords.push({ id, text });
+    }
+    renderWordBank(); renderAnswerArea();
+  });
+}
+
+function checkAnswer() {
+  if (quizState.answered) { nextQuestion(); return; }
+  if (quizState.answerWords.length === 0) return;
+
+  const q = quizState.questions[quizState.qIndex];
+  const correct = q.sentence; // already clean word-tokens
+  const answer  = quizState.answerWords.map(w => w.text);
+  const isCorrect = JSON.stringify(answer) === JSON.stringify(correct);
+
+  quizState.answered = true;
+  if (isCorrect) quizState.score++;
+
+  const feedback = document.getElementById('quizFeedback');
+  const area     = document.getElementById('answerArea');
+  const btn      = document.getElementById('checkBtn');
+
+  if (btn) btn.textContent = 'ข้อต่อไป →';
+
+  if (isCorrect) {
+    area.classList.add('correct');
+    area.querySelectorAll('.word-chip').forEach(c => { c.classList.remove('in-answer'); c.classList.add('correct-chip'); });
+    feedback.className = 'quiz-feedback show correct';
+    feedback.innerHTML = `✓ ถูกต้อง! &nbsp;<span style="font-size:12px;color:var(--muted)">${q.pinyin}</span>`;
+  } else {
+    area.classList.add('wrong');
+    area.querySelectorAll('.word-chip').forEach(c => { c.classList.remove('in-answer'); c.classList.add('wrong-chip'); });
+    feedback.className = 'quiz-feedback show wrong';
+    feedback.innerHTML = `✗ ยังไม่ถูก — ประโยคที่ถูกต้อง:<br><span class="correct-sentence">${q.full}</span><br><span style="font-size:11px;color:var(--muted)">${q.pinyin}</span>`;
+  }
+}
+
+function nextQuestion() {
+  quizState.qIndex++;
+  renderQuiz();
+}
+
+function renderQuizResult() {
+  const card = document.getElementById('mainCard');
+  const total = quizState.questions.length;
+  const s = quizState.score;
+  const pct = Math.round((s / total) * 100);
+  const stars = s >= total * 0.9 ? '⭐⭐⭐' : s >= total * 0.6 ? '⭐⭐' : '⭐';
+  const msg   = s >= total * 0.9 ? 'ยอดเยี่ยม!' : s >= total * 0.6 ? 'ดีมาก! ทำต่อไปนะ' : 'ลองทบทวนคำศัพท์อีกครั้งนะ';
+
+  card.innerHTML = `
+    <div class="quiz-header" style="background:#1a3a5c">
+      <div class="quiz-header-title">ผลการทดสอบ</div>
+      <div class="quiz-score-badge">${pct}%</div>
+    </div>
+    <div class="quiz-result">
+      <div class="result-stars">${stars}</div>
+      <div class="result-score">${s}<span style="font-size:24px;color:var(--muted)"> / ${total}</span></div>
+      <div class="result-label">${msg}</div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button class="result-btn" onclick="startQuiz()">ทำอีกครั้ง ↻</button>
+        <button class="result-btn" style="background:var(--red)" onclick="backToVocab()">กลับทบทวน ←</button>
+      </div>
+    </div>`;
+  renderProgressBar();
+}
+
+function backToVocab() {
+  current = vocab.length - 1;
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

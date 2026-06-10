@@ -394,14 +394,6 @@
     letter-spacing: 2px;
     text-transform: uppercase;
   }
-  .quiz-instruction {
-    font-size: 13px;
-    color: var(--muted);
-    background: var(--pale);
-    padding: 8px 12px;
-    border-radius: 4px;
-    line-height: 1.6;
-  }
   .quiz-meaning {
     font-size: 16px;
     font-weight: 600;
@@ -423,9 +415,7 @@
     border: 2px dashed var(--border);
     border-radius: 6px;
     background: #fdfaf6;
-    transition: border-color 0.2s;
   }
-  .word-bank.drag-over { border-color: #1a3a5c; background: #eef3f8; }
   /* Answer area */
   .answer-area {
     display: flex;
@@ -439,7 +429,6 @@
     transition: border-color 0.2s, background 0.3s;
     position: relative;
   }
-  .answer-area.drag-over { border-color: #1a3a5c; background: #eef3f8; }
   .answer-area.correct { border-color: var(--green); background: #f0faf4; }
   .answer-area.wrong   { border-color: var(--red);   background: #fdf3f2; }
   .answer-placeholder {
@@ -450,7 +439,7 @@
     width: 100%;
     text-align: center;
   }
-  /* Word chip */
+  /* Word chip — click interaction only */
   .word-chip {
     font-family: 'Noto Serif SC', serif;
     font-size: 18px;
@@ -458,16 +447,15 @@
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 6px 14px;
-    cursor: grab;
+    cursor: pointer;
     user-select: none;
-    transition: box-shadow 0.15s, transform 0.15s, background 0.2s;
-    touch-action: none;
+    transition: box-shadow 0.12s, transform 0.12s, background 0.15s;
   }
-  .word-chip:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
-  .word-chip.dragging { opacity: 0.45; }
-  .word-chip.in-answer { background: #e8f4ed; border-color: #a8d5b8; cursor: grab; }
-  .word-chip.correct-chip { background: #d4edda; border-color: var(--green); cursor: default; }
-  .word-chip.wrong-chip   { background: #fde8e6; border-color: var(--red);   cursor: default; }
+  .word-chip:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-2px); }
+  .word-chip:active { transform: scale(0.95); }
+  .word-chip.in-answer { background: #e8f4ed; border-color: #a8d5b8; }
+  .word-chip.correct-chip { background: #d4edda; border-color: var(--green); cursor: default; pointer-events: none; }
+  .word-chip.wrong-chip   { background: #fde8e6; border-color: var(--red);   cursor: default; pointer-events: none; }
 
   /* Feedback */
   .quiz-feedback {
@@ -575,7 +563,7 @@ const vocab = [
   {
     num: 3, zh: '半', pinyin: 'bàn', pos: ['数'],
     th: 'ครึ่ง', en: 'half',
-    tip: '半 ใช้บอกเวลา เช่น 六点半 = หกโมงครึ่ง (6:30)', 
+    tip: '半 ใช้บอกเวลา เช่น 六点半 = หกโมงครึ่ง (6:30)',
     examples: [
       { zh: ['现','在','是','八','点','半','。'], highlight: [4,5], pinyin: 'Xiànzài shì bā diǎn bàn.', th: 'ตอนนี้คือแปดโมงครึ่ง (8:30)' },
       { zh: ['我','们','八','点','半','出','发','。'], highlight: [2,3,4], pinyin: 'Wǒmen bā diǎn bàn chūfā.', th: 'พวกเราออกเดินทางตอนแปดโมงครึ่ง' },
@@ -807,7 +795,8 @@ const vocab = [
     th: 'ไตรมาสของชั่วโมง (15 นาที)', en: 'quarter (of an hour)',
     tip: '一刻 = 15 นาที, 两刻 = 30 นาที (= 半). 三点一刻 = 3:15, 三点三刻 = 3:45',
     examples: [
-      { zh: ['现','在','三','点','一','刻','。'], highlight: [5], pinyin: 'Xiànzài sān diǎn yī kè.', th: 'ตอนนี้บ่ายสามสิบห้าหรือสาม(โมง)สิบห้านาที (3:15)' },
+      // FIX: corrected Thai translation — 三点一刻 = 3:15 (สามโมงสิบห้านาที)
+      { zh: ['现','在','三','点','一','刻','。'], highlight: [5], pinyin: 'Xiànzài sān diǎn yī kè.', th: 'ตอนนี้สามโมงสิบห้านาที (3:15)' },
       { zh: ['差','一','刻','八','点','。'], highlight: [2], pinyin: 'Chà yī kè bā diǎn.', th: 'อีกสิบห้านาทีจะแปดโมง (7:45)' },
     ],
     related: [{ zh: '一刻', th: '15 นาที' }, { zh: '三刻', th: '45 นาที' }, { zh: '半', th: '30 นาที' }]
@@ -837,8 +826,9 @@ const vocab = [
 let current = -1; // -1 = cover
 const visited = new Set();
 
+// FIX: improved charLen — strips all parens variants, slashes, spaces
 function charLen(zh) {
-  return zh.replace('/', '').replace(/[（）]/g, '').length;
+  return zh.replace(/[/／]/g, '').replace(/[（）()]/g, '').replace(/\s/g, '').length;
 }
 
 function renderProgressBar() {
@@ -866,7 +856,7 @@ function renderProgressBar() {
 function buildExampleHTML(ex) {
   const chars = ex.zh;
   const highlightSet = new Set(ex.highlight);
-  return chars.map((c, i) => 
+  return chars.map((c, i) =>
     highlightSet.has(i) ? `<span class="highlight">${c}</span>` : c
   ).join('');
 }
@@ -891,21 +881,9 @@ function render() {
 
   visited.add(current);
   const v = vocab[current];
-  const len = v.zh.replace('/','').replace('（钟）','').length;
+  const len = charLen(v.zh);
   const sizeClass = len >= 4 ? 'three-char' : (len >= 3 ? 'two-char' : '');
   const posLabels = v.pos.map(p => `<span class="pos-tag">${p} ${POS_TH[p] || ''}</span>`).join(' ');
-
-  let relatedHTML = '';
-  if (v.related && v.related.length) {
-    relatedHTML = `
-      <hr class="divider"/>
-      <div>
-        <div class="section-label">คำที่เกี่ยวข้อง</div>
-        <div class="compounds">
-          ${v.related.map(r => `<div class="compound-chip"><span class="compound-zh">${r.zh}</span><span class="compound-th">${r.th}</span></div>`).join('')}
-        </div>
-      </div>`;
-  }
 
   card.innerHTML = `
     <div class="card-header">
@@ -986,7 +964,6 @@ document.addEventListener('keydown', e => {
 
 // ── QUIZ ENGINE ──────────────────────────────────────────────
 
-// sentence = word-tokens (no punctuation); full = display with punct
 const quizData = [
   { sentence: ['我','早上','九点','起床'],           full: '我早上九点起床。',    th: 'ฉันตื่นนอนตอนเก้าโมงเช้า',           pinyin: 'Wǒ zǎoshang jiǔ diǎn qǐ chuáng.' },
   { sentence: ['老师','下午','两点','上课'],          full: '老师下午两点上课。',   th: 'คุณครูเริ่มสอนตอนบ่ายสองโมง',          pinyin: 'Lǎoshī xiàwǔ liǎng diǎn shàng kè.' },
@@ -1007,8 +984,6 @@ let quizState = {
   answered: false,
   bankWords: [],
   answerWords: [],
-  dragSrc: null,
-  dragFrom: null, // 'bank' | 'answer'
 };
 
 function shuffle(arr) {
@@ -1039,7 +1014,6 @@ function renderQuiz() {
   }
 
   const q = quizState.questions[quizState.qIndex];
-  // Assign stable ids first, then shuffle
   const withIds = q.sentence.map((w, i) => ({ id: i, text: w }));
   quizState.bankWords = shuffle(withIds);
   quizState.answerWords = [];
@@ -1047,6 +1021,8 @@ function renderQuiz() {
 
   const pct = Math.round((quizState.qIndex / total) * 100);
 
+  // FIX: score display — show "answered so far / total" instead of "score / qIndex"
+  // so it never shows "0 / 0" on the first question
   card.innerHTML = `
     <div class="quiz-header">
       <div class="quiz-header-title">แบบทดสอบเรียงประโยค</div>
@@ -1055,19 +1031,19 @@ function renderQuiz() {
     <div class="quiz-body">
       <div class="quiz-progress"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
 
-      <div class="quiz-question-label">เรียงคำให้เป็นประโยค</div>
+      <div class="quiz-question-label">คลิกคำเพื่อเรียงประโยค</div>
 
       <div class="quiz-meaning">${q.th}</div>
 
       <div>
-        <div class="area-label">วางคำที่นี่</div>
+        <div class="area-label">ประโยคของคุณ (คลิกคำเพื่อเอาออก)</div>
         <div class="answer-area" id="answerArea">
-          <span class="answer-placeholder" id="answerPlaceholder">ลากคำมาวางที่นี่...</span>
+          <span class="answer-placeholder" id="answerPlaceholder">คลิกคำจากคลังด้านล่าง...</span>
         </div>
       </div>
 
       <div>
-        <div class="area-label">คลังคำ</div>
+        <div class="area-label">คลังคำ (คลิกเพื่อเพิ่ม)</div>
         <div class="word-bank" id="wordBank"></div>
       </div>
 
@@ -1081,7 +1057,6 @@ function renderQuiz() {
 
   renderWordBank();
   renderAnswerArea();
-  setupDragDrop();
   renderProgressBar();
 }
 
@@ -1094,7 +1069,13 @@ function renderWordBank() {
     chip.className = 'word-chip';
     chip.textContent = w.text;
     chip.dataset.id = w.id;
-    chip.dataset.from = 'bank';
+    chip.onclick = () => {
+      if (quizState.answered) return;
+      quizState.bankWords = quizState.bankWords.filter(x => x.id !== w.id);
+      quizState.answerWords.push({ id: w.id, text: w.text });
+      renderWordBank();
+      renderAnswerArea();
+    };
     bank.appendChild(chip);
   });
 }
@@ -1103,7 +1084,6 @@ function renderAnswerArea() {
   const area = document.getElementById('answerArea');
   if (!area) return;
   const ph = document.getElementById('answerPlaceholder');
-  // Remove old chips (keep placeholder)
   [...area.querySelectorAll('.word-chip')].forEach(c => c.remove());
   if (quizState.answerWords.length === 0) {
     if (ph) ph.style.display = '';
@@ -1114,134 +1094,16 @@ function renderAnswerArea() {
       chip.className = 'word-chip in-answer';
       chip.textContent = w.text;
       chip.dataset.id = w.id;
-      chip.dataset.from = 'answer';
+      chip.onclick = () => {
+        if (quizState.answered) return;
+        quizState.answerWords = quizState.answerWords.filter(x => x.id !== w.id);
+        quizState.bankWords.push({ id: w.id, text: w.text });
+        renderWordBank();
+        renderAnswerArea();
+      };
       area.appendChild(chip);
     });
   }
-}
-
-function setupDragDrop() {
-  // Touch + mouse drag for chips
-  const card = document.getElementById('mainCard');
-  if (!card) return;
-
-  let dragging = null;
-  let dragFrom = null;
-  let clone = null;
-  let startX, startY;
-  let didDrag = false; // prevents click firing after drag
-
-  function getChip(e) {
-    return e.target.closest('.word-chip');
-  }
-
-  // Pointer events (works for both mouse and touch)
-  card.addEventListener('pointerdown', e => {
-    if (quizState.answered) return;
-    const chip = getChip(e);
-    if (!chip) return;
-    e.preventDefault();
-    didDrag = false;
-    dragging = { id: +chip.dataset.id, text: chip.textContent.trim(), from: chip.dataset.from };
-    chip.classList.add('dragging');
-    clone = chip.cloneNode(true);
-    clone.style.cssText = `position:fixed;pointer-events:none;z-index:9999;opacity:0.9;transform:scale(1.08);transition:none;font-size:18px;padding:6px 14px;background:var(--pale);border:1px solid var(--border);border-radius:4px;font-family:'Noto Serif SC',serif;`;
-    document.body.appendChild(clone);
-    startX = e.clientX; startY = e.clientY;
-    moveClone(e);
-  });
-
-  card.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    e.preventDefault();
-    moveClone(e);
-    highlightDrop(e);
-  });
-
-  card.addEventListener('pointerup', e => {
-    if (!dragging) return;
-    e.preventDefault();
-    const target = getDropTarget(e);
-    if (target) {
-      handleDrop(dragging, target);
-      didDrag = true; // suppress the click that follows
-    }
-    cleanup();
-  });
-
-  card.addEventListener('pointercancel', () => { if (dragging) cleanup(); });
-
-  function moveClone(e) {
-    if (!clone) return;
-    clone.style.left = (e.clientX - 30) + 'px';
-    clone.style.top  = (e.clientY - 20) + 'px';
-  }
-
-  function getDropTarget(e) {
-    if (!clone) return null;
-    clone.style.display = 'none';
-    const el = document.elementFromPoint(e.clientX, e.clientY);
-    clone.style.display = '';
-    if (!el) return null;
-    if (el.closest('#answerArea')) return 'answer';
-    if (el.closest('#wordBank')) return 'bank';
-    return null;
-  }
-
-  function highlightDrop(e) {
-    const target = getDropTarget(e);
-    const aa = document.getElementById('answerArea');
-    const wb = document.getElementById('wordBank');
-    if (aa) aa.classList.toggle('drag-over', target === 'answer');
-    if (wb) wb.classList.toggle('drag-over', target === 'bank');
-  }
-
-  function cleanup() {
-    if (clone) { clone.remove(); clone = null; }
-    card.querySelectorAll('.word-chip.dragging').forEach(c => c.classList.remove('dragging'));
-    const aa = document.getElementById('answerArea');
-    const wb = document.getElementById('wordBank');
-    if (aa) aa.classList.remove('drag-over');
-    if (wb) wb.classList.remove('drag-over');
-    dragging = null;
-  }
-
-  function handleDrop(chip, target) {
-    if (!target) return;
-    if (chip.from === 'bank' && target === 'answer') {
-      quizState.bankWords = quizState.bankWords.filter(w => w.id !== chip.id);
-      quizState.answerWords.push({ id: chip.id, text: chip.text });
-      renderWordBank(); renderAnswerArea();
-    } else if (chip.from === 'answer' && target === 'bank') {
-      quizState.answerWords = quizState.answerWords.filter(w => w.id !== chip.id);
-      quizState.bankWords.push({ id: chip.id, text: chip.text });
-      renderWordBank(); renderAnswerArea();
-    } else if (chip.from === 'answer' && target === 'answer') {
-      // reorder: append to end
-      quizState.answerWords = quizState.answerWords.filter(w => w.id !== chip.id);
-      quizState.answerWords.push({ id: chip.id, text: chip.text });
-      renderAnswerArea();
-    }
-  }
-
-  // Click to move (tap on mobile / click on desktop — only if NOT a drag)
-  card.addEventListener('click', e => {
-    if (didDrag) { didDrag = false; return; } // swallow click that follows a drag
-    if (quizState.answered) return;
-    const chip = getChip(e);
-    if (!chip) return;
-    const id = +chip.dataset.id;
-    const text = chip.textContent.trim();
-    const from = chip.dataset.from;
-    if (from === 'bank') {
-      quizState.bankWords = quizState.bankWords.filter(w => w.id !== id);
-      quizState.answerWords.push({ id, text });
-    } else {
-      quizState.answerWords = quizState.answerWords.filter(w => w.id !== id);
-      quizState.bankWords.push({ id, text });
-    }
-    renderWordBank(); renderAnswerArea();
-  });
 }
 
 function checkAnswer() {
@@ -1249,7 +1111,7 @@ function checkAnswer() {
   if (quizState.answerWords.length === 0) return;
 
   const q = quizState.questions[quizState.qIndex];
-  const correct = q.sentence; // already clean word-tokens
+  const correct = q.sentence;
   const answer  = quizState.answerWords.map(w => w.text);
   const isCorrect = JSON.stringify(answer) === JSON.stringify(correct);
 
@@ -1259,8 +1121,11 @@ function checkAnswer() {
   const feedback = document.getElementById('quizFeedback');
   const area     = document.getElementById('answerArea');
   const btn      = document.getElementById('checkBtn');
+  const counter  = document.querySelector('.nav-counter');
 
   if (btn) btn.textContent = 'ข้อต่อไป →';
+  // FIX: update score display immediately after answering
+  if (counter) counter.textContent = `คะแนน ${quizState.score} / ${quizState.qIndex + 1}`;
 
   if (isCorrect) {
     area.classList.add('correct');
@@ -1299,14 +1164,16 @@ function renderQuizResult() {
       <div class="result-label">${msg}</div>
       <div style="display:flex;gap:10px;margin-top:8px">
         <button class="result-btn" onclick="startQuiz()">ทำอีกครั้ง ↻</button>
+        <!-- FIX: backToVocab now returns to cover page, not hardcoded last word -->
         <button class="result-btn" style="background:var(--red)" onclick="backToVocab()">กลับทบทวน ←</button>
       </div>
     </div>`;
   renderProgressBar();
 }
 
+// FIX: return to cover so user can navigate from the beginning, not stuck at word 28
 function backToVocab() {
-  current = vocab.length - 1;
+  current = -1;
   render();
 }
 
